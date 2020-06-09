@@ -1,24 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Card} from '../components/cadr'
 import {Button} from '../components/button'
 import {updateField, turn} from '../store/actions/actions'
 
 function Field(props) {
+  useEffect(() => {
+    props.updateField(props.cards)
+    // eslint-disable-next-line 
+}, [])
   
   return (
     <div className="field">
       <h1>Memory</h1>
-      <hr/>
       <div className="field__game">
-        {props.cards.map(card => {
+        {props.cards.map((card, index) => {
           return (
             <Card 
-              value={card}
-              key={Math.random()}
-              first={props.first}
-              second={props.second}
+              card={card}
+              key={index}
               turn={props.turn}
+              second={props.second}
+              step={props.step}
             />
           ) 
         })}
@@ -35,14 +38,15 @@ function mapStateToProps(state) {
   return {
     cards: state.store.cards,
     first: state.store.first,
-    second: state.store.second
+    second: state.store.second,
+    step: state.store.step
   }
 }
 
 function mapDispatchToProps(dispatch) { 
   return {
     updateField: (cards) => dispatch(updateField(cards)),
-    turn: (card1, card2, value) => dispatch(turn(card1, card2, value))
+    turn: (value, index) => dispatch(turn(value, index))
   }
 }
 

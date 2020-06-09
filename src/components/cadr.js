@@ -1,16 +1,29 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
  export function Card(props) {
-
-  const {first, second, value} = props
   
-   return (
+   const [turn, setTurn] = useState(false)
+   const value = props.card.value
+   const {step} = props
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTurn(false)
+    }, 1500);
+  }, [step])
+  
+  return (
     <div 
       className="card"
-      data-atr={value}
-      onClick={() => props.turn(first, second, props.value)}
+      onClick={() => {
+        setTurn(true)
+        props.turn(value)
+      }}
     >
-      {value}
+      {props.card.turned || turn 
+        ? <div className={value}></div> 
+        : null
+      } 
     </div>
    )
  }

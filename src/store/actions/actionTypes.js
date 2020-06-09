@@ -1,3 +1,6 @@
 export const UPD_FIELD = 'UPD_FIELD'
 export const SET_FIRST = 'SET_FIRST'
 export const SET_SECOND = 'SET_SECOND'
+export const TURN_ON = 'TURN_ON'
+export const REFRESH_VALUES = 'REFRESH_VALUES'
+export const STEP_UP = 'STEP_UP'
