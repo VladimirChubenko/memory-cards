@@ -1,41 +1,42 @@
-import {UPD_FIELD, SET_FIRST, SET_SECOND, TURN_ON, REFRESH_VALUES, STEP_UP} from '../actions/actionTypes'
+import {UPD_FIELD, SET_FIRST, SET_SECOND, TURN_ON, REFRESH_VALUES, STEP_UP, STEP_ZERO, WRONG_STEP_UP} from '../actions/actionTypes'
 
 export function updateField(array) { 
-  array.forEach(elem => elem.turned = false)
-  const payload = array.sort(function(){
-    return Math.random() - 0.5;
-  })
-  return {
-    type: UPD_FIELD,
-    payload
+  return async dispatch => {
+    dispatch(stepZero())
+    setTimeout(() => {
+      dispatch(refreshField(array))
+    }, 1000);
   }
 }
 
 export function turn(value) {
   return async (dispatch, getState) => {
     
-    if (getState().store.first === null) {
+    if (getState().store.first === null && getState().store.second === null) {
       // set first
       dispatch(setFirst(value))
-
-    } else {
+    } else if (getState().store.second === null) {
       // set second
       dispatch(setSecond(value))
-      
       // сравнить first и second
       if(getState().store.first === getState().store.second) {
-
         // заморозить пару 
+
         dispatch(turnOn(getState().store.cards, getState().store.first))
-        // обнулить first и second
-        dispatch(refreshValues())
+
+        // обнулить first и second      
+        dispatch(refreshValues()) 
+        dispatch(stepUp(getState().store.step))    
       } else {
         // сбросить состояние
-
         // обнулить first и second
-        dispatch(refreshValues())
-        dispatch(stepUp(getState().store.step))
+        setTimeout(() => {
+          dispatch(refreshValues())
+        }, 1000);
+        dispatch(wrongStepUp(getState().store.step, getState().store.wrongStep))
       }
+    } else {
+      return
     }
   }
 }
@@ -55,7 +56,6 @@ function setSecond(value) {
 }
 
 function turnOn(arr, value) {
-
   const payload = arr.map(elem => {
     if(elem.value === value) {
       elem.turned = true
@@ -78,5 +78,30 @@ function stepUp(val) {
   return {
     type: STEP_UP,
     payload: val
+  }
+}
+
+function wrongStepUp(step, wrong) {
+  return {
+    type: WRONG_STEP_UP,
+    step: step,
+    wrong: wrong
+  }
+}
+
+function stepZero() {
+  return {
+    type: STEP_ZERO
+  }
+}
+
+function refreshField(array) {
+  let payload = array.map(elem => elem = {...elem, turned: false})
+   payload.sort(function(){
+    return Math.random() - 0.5;
+  })
+  return {
+    type: UPD_FIELD,
+    payload
   }
 }

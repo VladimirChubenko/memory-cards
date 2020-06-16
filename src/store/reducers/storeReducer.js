@@ -1,4 +1,4 @@
-import {UPD_FIELD, SET_FIRST, SET_SECOND, TURN_ON, REFRESH_VALUES, STEP_UP} from '../actions/actionTypes'
+import {UPD_FIELD, SET_FIRST, SET_SECOND, TURN_ON, REFRESH_VALUES, STEP_UP, STEP_ZERO, WRONG_STEP_UP} from '../actions/actionTypes'
 
 const variables = [
   {value: 'one', turned: false},
@@ -15,6 +15,7 @@ const initialState = {
   cards: [...variables, ...variables],
   first: null,
   second: null,
+  wrongStep: 0,
   step: 0
 }
 
@@ -25,8 +26,7 @@ export default function storeReducer(state = initialState, action) {
         ...state,
         cards: [...action.payload],
         first: null,
-        second: null,
-        step: 0
+        second: null
       }
     case SET_FIRST:
         return {
@@ -53,6 +53,18 @@ export default function storeReducer(state = initialState, action) {
         return {
           ...state,
           step: action.payload + 1
+        }
+    case WRONG_STEP_UP:
+        return {
+          ...state,
+          step: action.step + 1,
+          wrongStep: action.wrong + 1
+        }
+    case STEP_ZERO:
+        return {
+          ...state,
+          step: 0,
+          wrongStep: 0
         }
     default:
        return state
