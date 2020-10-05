@@ -1,9 +1,9 @@
 import React from 'react'
 
-export function Steps(props) {
+export function Steps({steps}) {
   return (
     <div className="steps">
-      STEPS: {props.steps}
+      STEPS: {steps}
     </div>
   )
 }

@@ -13,30 +13,24 @@ export function turn(value) {
   return async (dispatch, getState) => {
     
     if (getState().store.first === null && getState().store.second === null) {
-      // set first
+      // set first card
       dispatch(setFirst(value))
     } else if (getState().store.second === null) {
-      // set second
+      // set second card
       dispatch(setSecond(value))
-      // сравнить first и second
+      // compare
       if(getState().store.first === getState().store.second) {
-        // заморозить пару 
-
         dispatch(turnOn(getState().store.cards, getState().store.first))
-
-        // обнулить first и second      
+        // refresh     
         dispatch(refreshValues()) 
         dispatch(stepUp(getState().store.step))    
       } else {
-        // сбросить состояние
-        // обнулить first и second
+        // refresh
         setTimeout(() => {
           dispatch(refreshValues())
         }, 1000);
         dispatch(wrongStepUp(getState().store.step, getState().store.wrongStep))
       }
-    } else {
-      return
     }
   }
 }

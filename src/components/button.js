@@ -1,12 +1,12 @@
 import React from 'react'
 
-export function Button(props) {
+export function Button({cards, start, updateField}) {
   return (
     <div 
       className="button"
-      onClick={() => props.updateField(props.cards)}
+      onClick={() => updateField(cards)}
     >
-      restart
+      {start ? 'start' : 'restart'}
     </div>
   )
 }

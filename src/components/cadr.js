@@ -1,40 +1,38 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 
-function Card(props) {
-  
-  const [turn, setTurn] = useState(false)
-  const value = props.card.value
-  const {wrongStep, second} = props
+function Card({wrongStep, second, start, card, turnOver}) {
 
-   useEffect(() => {
-       setTimeout(() => {
-         setTurn(false)
-       }, 1000)  
-    }, [wrongStep])
+  const [turn, setTurn] = useState(false)
+  useEffect(() => {
+      setTimeout(() => {
+        setTurn(false)
+      }, 1000)  
+  }, [wrongStep])
     
-    return (
-      <div 
+  return (
+    <div 
       className="card"
       onClick={() => {
-        if(!turn && !props.card.turned && second === null) {
+        if(!turn && !card.turned && second === null) {
           setTurn(true)
-          props.turn(value)
+          turnOver(card.value)
         }
       }}
     >
-      {props.card.turned || turn
-        ? <div className={value + ` open`}></div> 
+      {card.turned || turn || start
+        ? <div className={card.value + ` open`}></div> 
         : <div className="ball"></div> 
       } 
-    </div>
-   )
+  </div>
+  )
  }
 
  function mapStateToProps(state) {
   return {
     second: state.store.second,
-    wrongStep: state.store.wrongStep
+    wrongStep: state.store.wrongStep,
+    start: state.store.start
   }
 }
 

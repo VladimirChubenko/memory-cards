@@ -15,6 +15,7 @@ const initialState = {
   cards: [...variables, ...variables],
   first: null,
   second: null,
+  start: true,
   wrongStep: 0,
   step: 0
 }
@@ -26,7 +27,8 @@ export default function storeReducer(state = initialState, action) {
         ...state,
         cards: [...action.payload],
         first: null,
-        second: null
+        second: null,
+        start: false
       }
     case SET_FIRST:
         return {
