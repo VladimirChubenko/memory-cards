@@ -1,1 +1,1 @@
-<a href="https://memory-cards-vc.firebaseapp.com/">Show project</a>
+<a href="https://memory-cards-vc.firebaseapp.com/" target="_blank" rel="noopener noreferrer">Show project</a>
