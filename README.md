@@ -2,6 +2,8 @@
 
 <hr>
 
+<h1>About this app</h1>
+
 <ul>
   <li> React:
     <ul>
