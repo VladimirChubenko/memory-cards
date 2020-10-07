@@ -1,5 +1,7 @@
 <a href="https://memory-cards-vc.firebaseapp.com/" target="_blank" rel="noopener noreferrer">Show project</a>
 
+<hr>
+
 <ul>
   <li> React:
     <ul>
